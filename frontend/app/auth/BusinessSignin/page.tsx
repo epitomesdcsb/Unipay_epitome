@@ -13,14 +13,14 @@ export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const router = useRouter();
 
-
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
   const handleSignIn = async () => {
   
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:5001/api/business/signin", {
+      const response = await fetch(`${apiUrl}/api/business/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

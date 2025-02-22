@@ -14,6 +14,7 @@ export default function SignUpPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const router = useRouter();
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 
@@ -26,7 +27,7 @@ export default function SignUpPage() {
     setIsLoading(true);
   
     try {
-      const response = await fetch("http://localhost:5001/api/users/signup", {
+      const response = await fetch(`${apiUrl}/api/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, phone, password }),

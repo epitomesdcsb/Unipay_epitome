@@ -24,11 +24,13 @@ export default function TransactionHistory2({ title, username }: TransactionHist
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [hoveredTransaction, setHoveredTransaction] = useState<Transaction | null>(null)
   const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null)
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(`http://localhost:5001/user-transactions/${username}`);
+        const response = await axios.get(`${apiUrl}/user-transactions/${username}`);
   
         console.log("Raw API Response:", response.data.transactions);
   

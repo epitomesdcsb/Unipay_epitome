@@ -32,13 +32,15 @@ export default function CreateEventForm() {
     }))
   }
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
     setSuccess(false)
 
     try {
-      const response = await axios.post("http://localhost:5001/api/events/createEvent", formData)
+      const response = await axios.post(`${apiUrl}/api/events/createEvent`, formData)
       if (response.data.success) {
         setSuccess(true)
         setFormData({

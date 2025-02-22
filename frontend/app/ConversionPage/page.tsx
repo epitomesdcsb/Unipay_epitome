@@ -17,6 +17,7 @@ declare global {
     Razorpay: any;
   }
 }
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 function ConversionPage() {
@@ -63,7 +64,7 @@ function ConversionPage() {
         return;
       }
 
-      const response = await fetch("http://localhost:5001/order", {
+      const response = await fetch(`${apiUrl}/order`, {
         method: "POST",
         body: JSON.stringify({
           amount: parseFloat(rupees) * 100,
@@ -87,7 +88,7 @@ function ConversionPage() {
         handler: async function (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) {
           const body = { ...response };
 
-          const validateResponse = await fetch("http://localhost:5001/order/validate", {
+          const validateResponse = await fetch(`${apiUrl}/order/validate`, {
             method: "POST",
             body: JSON.stringify(body),
             headers: {
@@ -98,7 +99,7 @@ function ConversionPage() {
           console.log(jsonResponse);
           if(jsonResponse.msg === "success") {
             try {
-              const response = await axios.post("http://localhost:5001/sample-convert", {
+              const response = await axios.post(`${apiUrl}/sample-convert`, {
                 username: localStorage.getItem("username"),
                 amount: parseFloat(rupees),
                 currency,

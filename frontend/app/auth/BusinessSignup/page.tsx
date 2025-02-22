@@ -23,6 +23,7 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react"; 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const formSchema = z.object({
   businessName: z.string().min(2, {
@@ -67,7 +68,7 @@ export default function SignupPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true); 
     try {
-      const response = await fetch("http://localhost:5001/api/business/signup", {
+      const response = await fetch(`${apiUrl}/api/business/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -21,7 +21,11 @@ connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors({
+  origin: "https://unipaytest.vercel.app/", // Allow frontend domain
+  methods: "GET,POST,PUT,DELETE",
+  credentials: true
+}));
 
 const PORT = process.env.PORT || 5000;
 

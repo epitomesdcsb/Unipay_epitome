@@ -8,11 +8,13 @@ import axios from "axios";
 export default function WalletOverview() {
   const [coins, setCoins] = useState(0);
   const username = localStorage.getItem("username");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
   useEffect(() => {
     if (!username) return;
 
-    axios.get(`http://localhost:5001/coins/${username}`)
+    axios.get(`${apiUrl}/coins/${username}`)
       .then((response) => {
         setCoins(response.data.coins);
       })

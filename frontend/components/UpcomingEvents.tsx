@@ -21,11 +21,13 @@ export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:5001/all-events");
+        const response = await fetch(`${apiUrl}/all-events`);
         if (!response.ok) throw new Error("Failed to fetch events.");
 
         const data = await response.json();
@@ -63,6 +65,8 @@ export default function EventsPage() {
 function EventCard({ event }: { event: Event }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string | null>(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
   const handleBuyPass = async () => {
     setLoading(true);
@@ -70,7 +74,7 @@ function EventCard({ event }: { event: Event }) {
 
     try {
         const username = localStorage.getItem("username");
-      const response = await fetch(`http://localhost:5001/api/events/${event._id}/pay`, {
+      const response = await fetch(`${apiUrl}/api/events/${event._id}/pay`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -30,10 +30,11 @@ export default function CoinTransferPage() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [paymentType, setPaymentType] = useState<'business' | 'student' | null>(null);
   const [studentId, setStudentId] = useState('');
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Fetch businesses
   useEffect(() => {
-    axios.get("http://localhost:5001/businesses")
+    axios.get(`${apiUrl}/businesses`)
       .then(response => {
         setBusinesses(response.data);
       })
@@ -58,7 +59,7 @@ export default function CoinTransferPage() {
 
       
       if(paymentType === 'business') {
-        const response = await axios.post("http://localhost:5001/api/users//transferBusiness", {
+        const response = await axios.post(`${apiUrl}/api/users//transferBusiness`, {
           username: senderUsername,
           businessPhoneNumber: selectedBusiness.phoneNumber,
           amount: parseInt(paymentAmount)
@@ -66,7 +67,7 @@ export default function CoinTransferPage() {
         alert(JSON.stringify(response.data.message));
       }
       else {
-        const response = await axios.post("http://localhost:5001/api/users/transfer", {
+        const response = await axios.post(`${apiUrl}/api/users/transfer`, {
           senderUsername,
           receiverUsername: studentId,
           amount,
